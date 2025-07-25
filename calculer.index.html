@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>G.J.W.9 Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(-45deg, #111, #b30000, #000, #8b0000);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: white;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .welcome {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      animation: glow 2s ease-in-out infinite alternate;
+      text-align: center;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+        color: #fff;
+      }
+      to {
+        text-shadow: 0 0 20px #ffffff, 0 0 30px #ff0000;
+        color: #ffcccc;
+      }
+    }
+
+    .calculator {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ff000055;
+      width: 90%;
+      max-width: 350px;
+      animation: fadeIn 1s ease-in-out;
+      backdrop-filter: blur(8px);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      background-color: #222;
+      color: white;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #ff0000;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #990000;
+      transform: scale(1.03);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+    }
+
+    .results {
+      margin-top: 20px;
+      background-color: #222;
+      padding: 15px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .result-line {
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    #resetBtn {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .welcome { font-size: 22px; }
+      h1 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="welcome">👋 Welcome to <span style="color:#ff4d4d">G.J.W.9</span> Calculator</div>
+
+  <div class="calculator">
+    <h1>🔢 Calculator</h1>
+    <input type="number" id="num1" placeholder="First number">
+    <input type="number" id="num2" placeholder="Second number">
+    <button onclick="calculate()">✅ Calculate</button>
+
+    <div class="results" id="results" style="display: none;"></div>
+
+    <button id="resetBtn" onclick="resetCalc()">🔁 إعادة الحساب</button>
+  </div>
+
+  <script>
+    function calculate() {
+      const n1 = parseFloat(document.getElementById("num1").value);
+      const n2 = parseFloat(document.getElementById("num2").value);
+
+      if (isNaN(n1) || isNaN(n2)) {
+        alert("🛑 المرجو إدخال رقمين صحيحين!");
+        return;
+      }
+
+      const add = n1 + n2;
+      const sub = n1 - n2;
+      const mul = n1 * n2;
+      const div = n2 !== 0 ? (n1 / n2).toFixed(2) : "∞";
+      const mod = n1 % n2;
+
+      const resultBox = document.getElementById("results");
+      resultBox.style.display = "block";
+      resultBox.innerHTML = `
+        <div class="result-line">➕ Addition: ${add}</div>
+        <div class="result-line">➖ Soustraction: ${sub}</div>
+        <div class="result-line">✖️ Multiplication: ${mul}</div>
+        <div class="result-line">➗ Division: ${div}</div>
+        <div class="result-line">🧮 Modulus: ${mod}</div>
+      `;
+
+      document.getElementById("resetBtn").style.display = "block";
+    }
+
+    function resetCalc() {
+      document.getElementById("num1").value = "";
+      document.getElementById("num2").value = "";
+      document.getElementById("results").style.display = "none";
+      document.getElementById("resetBtn").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
